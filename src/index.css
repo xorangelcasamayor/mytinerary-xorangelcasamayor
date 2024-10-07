@@ -1,0 +1,32 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60rem; 
+    background-image: url('https://images.pexels.com/photos/207896/pexels-photo-207896.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation: moveBackground 20s linear infinite;
+  }
+  
+  .hero-content {
+    text-align: center;
+    color: white;
+    z-index: 1; 
+  }
+  
+  @keyframes moveBackground {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 100% 0%;
+    }
+  }
+
