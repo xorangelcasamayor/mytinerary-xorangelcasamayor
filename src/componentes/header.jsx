@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SunIcon, MoonIcon, HomeIcon, GlobeAltIcon, UserIcon } from '@heroicons/react/24/solid';
@@ -34,8 +33,7 @@ const Header = () => {
   return (
     <header className={`absolute top-0 left-0 w-full flex items-center justify-between p-4 ${isDarkMode ? 'bg-gray-900' : 'bg-transparent'} text-white z-20`}>
       <div className="flex items-center">
-        <button onClick={toggleMenu} className="text-white focus:outline-none">
-          {}
+        <button onClick={toggleMenu} className="text-white focus:outline-none md:hidden">
           <div className="space-y-1">
             <div className="h-1 w-8 bg-white"></div>
             <div className="h-1 w-8 bg-white"></div>
@@ -43,20 +41,29 @@ const Header = () => {
           </div>
         </button>
         {isMenuOpen && (
-          <nav className="absolute top-0 left-0 w-64 h-screen bg-gray-800 text-white z-30" onMouseLeave={handleMouseLeave}>
-            <ul className="flex flex-col items-start space-y-4 p-4">
-              <li className="flex items-center">
-                <HomeIcon className="h-6 w-6 mr-2" />
-                <Link to="/" className="hover:underline">Home</Link>
-              </li>
-              <li className="flex items-center">
-                <GlobeAltIcon className="h-6 w-6 mr-2" />
-                <Link to="/cities" className="hover:underline">Cities</Link>
-              </li>
-              {}
-            </ul>
-          </nav>
+         <nav className="absolute top-0 left-0 w-64 h-screen bg-gray-800 text-white z-30" onMouseLeave={handleMouseLeave}>
+         <ul className="flex flex-col items-start space-y-4 p-4">
+           <li className="flex items-center">
+             <HomeIcon className="h-12 w-12 mr-2" /> 
+             <Link to="/" className="hover:underline">Home</Link>
+           </li>
+           <li className="flex items-center">
+             <GlobeAltIcon className="h-12 w-12 mr-2" /> 
+             <Link to="/cities" className="hover:underline">Cities</Link>
+           </li>
+         </ul>
+       </nav>
+       
         )}
+        <nav className="hidden md:flex space-x-4">
+          <Link to="/" className="flex items-center hover:underline">
+            <HomeIcon className="h-6 w-6" />
+          </Link>
+          <Link to="/cities" className="flex items-center hover:underline">
+            <GlobeAltIcon className="h-6 w-6" />
+          </Link>
+  
+        </nav>
       </div>
       <div className="flex flex-col items-center">
         <span className="text-lg">{time}</span>

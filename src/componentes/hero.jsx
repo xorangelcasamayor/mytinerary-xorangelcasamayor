@@ -1,6 +1,8 @@
 
+
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [showText, setShowText] = useState([false, false, false]);
@@ -47,21 +49,32 @@ const Hero = () => {
         Find your perfect trip, designed by insiders who know and love their cities!
       </motion.p>
 
-      <motion.a
-        href="#"
-        className="relative z-10 mt-4 px-6 py-2 bg-black text-white font-semibold rounded-lg shadow-md"
-        whileHover={{
-          scale: 1.1,
-          opacity: 0.8,
-          transition: { duration: 0.3 },
-        }}
-        whileTap={{
-          scale: 0.95,
-          opacity: 1,
-        }}
+      <Link
+        to="/cities" 
+        className="relative z-10 mt-4 px-8 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md"
       >
-        Start your adventure today!
-      </motion.a>
+        <motion.div
+          whileHover={{
+            scale: 1.1,
+            opacity: 0.8,
+            transition: { duration: 0.3 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            opacity: 1,
+          }}
+          animate={{
+            rotate: [0, 2, -2, 0],
+          }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        >
+          Start your adventure today!
+        </motion.div>
+      </Link>
     </section>
   );
 };
