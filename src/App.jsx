@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './componentes/header';
