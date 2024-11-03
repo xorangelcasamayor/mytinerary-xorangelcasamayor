@@ -1,33 +1,22 @@
-import React, { useEffect, useState } from 'react';
+
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from './componentes/header';
-import Hero from './componentes/hero';
-import Carousel from './componentes/carousel';
-import Footer from './componentes/Footer';
-import CitiesPage from './componentes/citiesPage';
-import CityDetail from './componentes/cityDetails';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Carousel from './components/Carousel';
+import CityPage from './components/CityPage';
+import CityDetail from './components/CityDetail';
+import Footer from './components/Footer';
 
 const App = () => {
-  const [cities, setCities] = useState([]);
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      const response = await fetch('http://localhost:8080/api/cities/all');
-      const data = await response.json();
-      setCities(data.response);
-    };
-
-    fetchCities();
-  }, []);
-
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<><Hero /><Carousel /></>} />
-          <Route path="/cities" element={<CitiesPage />} />
-          <Route path="/city/:cityId" element={<CityDetail cities={cities} />} />
+          <Route path="/cities" element={<CityPage />} />
+          <Route path="/city/:cityId" element={<CityDetail />} />
         </Routes>
       </main>
       <Footer />
@@ -36,4 +25,3 @@ const App = () => {
 };
 
 export default App;
-

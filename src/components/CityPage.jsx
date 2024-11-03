@@ -1,37 +1,22 @@
-
 import React, { useEffect, useState } from 'react';
 import { HeartIcon } from '@heroicons/react/24/solid';
 import { useNavigate } from 'react-router-dom'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCities } from '../store/actions/citiesAction';
 
 const CitiesPage = ({ isDarkMode }) => {
-  const [cities, setCities] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { cities, loading, error } = useSelector(state => state.cities);
   const [searchTerm, setSearchTerm] = useState('');
   const [hoveredCity, setHoveredCity] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCities = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/cities/all');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setCities(data.response);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCities();
-  }, []);
+    dispatch(fetchCities());
+  }, [dispatch]);
 
   const filteredCities = cities.filter(city => 
-    city.city.toLowerCase().startsWith(searchTerm.toLowerCase())
+    city.city && city.city.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
   if (loading) {
@@ -45,7 +30,7 @@ const CitiesPage = ({ isDarkMode }) => {
   if (error) {
     return (
       <div className={`flex items-center justify-center h-screen ${isDarkMode ? 'bg-gray-800' : 'bg-slate-600'}`}>
-        <h1 className="text-center text-3xl font-bold text-white">Error: {error.message}</h1>
+        <h1 className="text-center text-3xl font-bold text-white">Error: {error}</h1>
       </div>
     );
   }
