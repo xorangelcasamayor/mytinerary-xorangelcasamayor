@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItineraries } from '../store/actions/itinerariesActions';
 import { HeartIcon } from '@heroicons/react/24/solid';
@@ -7,16 +7,17 @@ import { HeartIcon } from '@heroicons/react/24/solid';
 const CityDetail = () => {
   const { cityId } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { itineraries, loading, error } = useSelector((state) => state.itineraries);
   const { cities } = useSelector((state) => state.cities);
-  const city = cities.find(city => city._id === cityId);
+  
+  const city = cities.find((city) => city._id === cityId);
   
   const [expandedItineraries, setExpandedItineraries] = useState(new Set());
-  const [likesCount, setLikesCount] = useState({}); 
+  const [likesCount, setLikesCount] = useState({});
 
   useEffect(() => {
     dispatch(fetchItineraries(cityId));
+    console.log(city); 
   }, [dispatch, cityId]);
 
   const toggleExpand = (id) => {
@@ -28,14 +29,15 @@ const CityDetail = () => {
   const handleLike = (id) => {
     setLikesCount((prev) => ({
       ...prev,
-      [id]: (prev[id] || 0) + 1 
+      [id]: (prev[id] || 0) + 1
     }));
   };
 
-  if (loading) return <h1>Loading itineraries...</h1>;
-  if (error) return <h1>Error: {error}</h1>;
+
+  if (loading) return <h1>Loading city details...</h1>;
+  if (error) return <h1>Error loading city details: {error}</h1>;
   if (!city) return <h1>City not found</h1>;
-  
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-cover bg-center h-screen relative" style={{ backgroundImage: `url(${city.photo})` }}>
@@ -48,12 +50,13 @@ const CityDetail = () => {
         </div>
       </div>
 
-      <main className="flex flex-col items-center justify-center bg-slate-200 py-8">
+
+      <div className="flex flex-col items-center justify-center bg-slate-200 py-8">
         <section className="space-y-10 text-neutral-500 dark:text-neutral-300 text-center">
           <h1 className="text-5xl font-bold">ITINERARIES</h1>
           <div className="flex flex-wrap justify-center gap-12">
-           {Array.isArray(itineraries) && itineraries.length > 0 ? (
-              itineraries.map(itinerary => (
+            {Array.isArray(itineraries) && itineraries.length > 0 ? (
+              itineraries.map((itinerary) => (
                 <div key={itinerary._id} className="relative overflow-hidden w-full sm:w-[min(100%,40rem)] h-auto border bg-slate-50 dark:bg-black dark:border dark:border-slate-700 rounded-lg shadow-xl p-8 flex flex-col justify-between">
                   <div className="flex items-center mb-6">
                     <img 
@@ -102,7 +105,7 @@ const CityDetail = () => {
             )}
           </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 };

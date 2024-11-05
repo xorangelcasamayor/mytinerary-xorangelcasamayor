@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SunIcon, MoonIcon, HomeIcon, GlobeAltIcon, UserIcon } from '@heroicons/react/24/solid';
@@ -20,10 +19,6 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleMouseLeave = () => {
-    setIsMenuOpen(false);
-  };
-
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     document.body.classList.toggle('bg-gray-800', !isDarkMode);
@@ -41,19 +36,18 @@ const Header = () => {
           </div>
         </button>
         {isMenuOpen && (
-         <nav className="absolute top-0 left-0 w-64 h-screen bg-gray-800 text-white z-30" onMouseLeave={handleMouseLeave}>
-         <ul className="flex flex-col items-start space-y-4 p-4">
-           <li className="flex items-center">
-             <HomeIcon className="h-12 w-12 mr-2" /> 
-             <Link to="/" className="hover:underline">Home</Link>
-           </li>
-           <li className="flex items-center">
-             <GlobeAltIcon className="h-12 w-12 mr-2" /> 
-             <Link to="/cities" className="hover:underline">Cities</Link>
-           </li>
-         </ul>
-       </nav>
-       
+          <nav className="absolute top-0 left-0 w-64 h-screen bg-gray-800 text-white z-30">
+            <ul className="flex flex-col items-start space-y-4 p-4">
+              <li className="flex items-center">
+                <HomeIcon className="h-12 w-12 mr-2" />
+                <Link to="/" className="hover:underline">Home</Link>
+              </li>
+              <li className="flex items-center">
+                <GlobeAltIcon className="h-12 w-12 mr-2" />
+                <Link to="/cities" className="hover:underline">Cities</Link>
+              </li>
+            </ul>
+          </nav>
         )}
         <nav className="hidden md:flex space-x-4">
           <Link to="/" className="flex items-center hover:underline">
@@ -62,7 +56,6 @@ const Header = () => {
           <Link to="/cities" className="flex items-center hover:underline">
             <GlobeAltIcon className="h-6 w-6" />
           </Link>
-  
         </nav>
       </div>
       <div className="flex flex-col items-center">
@@ -85,4 +78,3 @@ const Header = () => {
 };
 
 export default Header;
-

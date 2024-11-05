@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { HeartIcon } from '@heroicons/react/24/solid';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCities } from '../store/actions/citiesAction';
+import axios from 'axios';
+import { fetchCitiesRequest, fetchCitiesSuccess, fetchCitiesFailure } from '../store/actions/citiesAction'; 
 
 const CitiesPage = ({ isDarkMode }) => {
   const dispatch = useDispatch();
@@ -12,10 +13,22 @@ const CitiesPage = ({ isDarkMode }) => {
   const [hoveredCity, setHoveredCity] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchCities());
+
+    const fetchCities = async () => {
+      dispatch(fetchCitiesRequest());
+      try {
+        const response = await axios.get('http://localhost:8080/api/cities/all');
+        dispatch(fetchCitiesSuccess(response.data.response)); 
+      } catch (err) {
+        dispatch(fetchCitiesFailure(err.message)); 
+      }
+    };
+
+    fetchCities();
   }, [dispatch]);
 
-  const filteredCities = cities.filter(city => 
+ 
+  const filteredCities = cities.filter(city =>
     city.city && city.city.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
@@ -52,7 +65,10 @@ const CitiesPage = ({ isDarkMode }) => {
       <div className="flex flex-wrap justify-center">
         {filteredCities.length > 0 ? (
           filteredCities.map((city) => (
-            <div key={city._id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2">
+            <div 
+              key={city._id} 
+              className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2"
+            >
               <div 
                 className="relative bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 cursor-pointer"
                 onClick={() => navigate(`/city/${city._id}`)} 
