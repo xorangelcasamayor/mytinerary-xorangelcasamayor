@@ -13,7 +13,7 @@ const CityDetail = () => {
   const city = cities.find(city => city._id === cityId);
   
   const [expandedItineraries, setExpandedItineraries] = useState(new Set());
-  const [likesCount, setLikesCount] = useState({}); // Store likes count for each itinerary
+  const [likesCount, setLikesCount] = useState({}); 
 
   useEffect(() => {
     dispatch(fetchItineraries(cityId));
@@ -28,7 +28,7 @@ const CityDetail = () => {
   const handleLike = (id) => {
     setLikesCount((prev) => ({
       ...prev,
-      [id]: (prev[id] || 0) + 1 // Increment like count
+      [id]: (prev[id] || 0) + 1 
     }));
   };
 
@@ -73,7 +73,7 @@ const CityDetail = () => {
                       >
                         <HeartIcon className={`h-10 w-10 ${likesCount[itinerary._id] ? 'text-red-500' : 'text-gray-300'}`} />
                       </button>
-                      <span className="text-gray-700 ml-2">{likesCount[itinerary._id] || 0}</span> {/* Display like count */}
+                      <span className="text-gray-700 ml-2">{likesCount[itinerary._id] || 0}</span> 
                     </div>
                   </div>
                   <p className="text-3xl text-gray-700">{itinerary.price}$ 💵</p>

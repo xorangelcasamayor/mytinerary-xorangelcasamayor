@@ -1,4 +1,3 @@
-// store/store.js
 import { configureStore } from '@reduxjs/toolkit';
 import citiesReducer from './reducer/citiesReducer';
 import itinerariesReducer from './reducer/itinerariesReducer';

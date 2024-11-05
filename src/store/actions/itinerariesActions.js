@@ -1,4 +1,5 @@
-// store/actions/itinerariesAction.js
+import axios from 'axios';
+
 export const FETCH_ITINERARIES_REQUEST = 'FETCH_ITINERARIES_REQUEST';
 export const FETCH_ITINERARIES_SUCCESS = 'FETCH_ITINERARIES_SUCCESS';
 export const FETCH_ITINERARIES_FAILURE = 'FETCH_ITINERARIES_FAILURE';
@@ -17,14 +18,12 @@ export const fetchItinerariesFailure = (error) => ({
   payload: error,
 });
 
-// Async action creator
 export const fetchItineraries = (cityId) => {
   return async (dispatch) => {
     dispatch(fetchItinerariesRequest());
     try {
-      const response = await fetch(`http://localhost:8080/api/itineraries/itinerary/${cityId}`);
-      const data = await response.json();
-      dispatch(fetchItinerariesSuccess(data.response));
+      const response = await axios.get(`http://localhost:8080/api/itineraries/itinerary/${cityId}`);
+      dispatch(fetchItinerariesSuccess(response.data.response));
     } catch (error) {
       dispatch(fetchItinerariesFailure(error.message));
     }

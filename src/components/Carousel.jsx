@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import cities from './data/cities'; 
 import { HeartIcon } from '@heroicons/react/24/solid';
@@ -7,19 +6,27 @@ import { HeartIcon } from '@heroicons/react/24/solid';
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const visibleCities = 4;
+  const totalCities = cities.length;
+
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % Math.ceil(totalCities / visibleCities));
+  };
+
+ 
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + Math.ceil(totalCities / visibleCities)) % Math.ceil(totalCities / visibleCities));
+  };
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % Math.ceil(cities.length / 4));
-    }, 3000);
+    const interval = setInterval(nextSlide, 3000);
     return () => clearInterval(interval);
   }, []);
 
-  const totalCities = cities.length;
-  const visibleCities = 4;
-
   return (
-    <div className="carousel-container">
-      <h2 className="text-center text-2xl font-bold mt-4">Popular Tineraries</h2>
+    <div className="carousel-container relative">
+      <h2 className="text-center text-2xl font-bold mt-4">Popular Itineraries</h2>
       <div className="relative w-full overflow-hidden">
         <div 
           className="flex transition-transform duration-500" 
@@ -40,6 +47,8 @@ const Carousel = () => {
             </div>
           ))}
         </div>
+
+       
         {totalCities % visibleCities !== 0 && (
           <div className="flex justify-center w-full">
             {Array.from({ length: visibleCities - (totalCities % visibleCities) }).map((_, i) => (
@@ -49,6 +58,23 @@ const Carousel = () => {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="absolute top-1/2 left-0 transform -translate-y-1/2 z-10">
+        <button 
+          onClick={prevSlide} 
+          className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-200 focus:outline-none"
+        >
+          &#8249; 
+        </button>
+      </div>
+      <div className="absolute top-1/2 right-0 transform -translate-y-1/2 z-10">
+        <button 
+          onClick={nextSlide} 
+          className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-200 focus:outline-none"
+        >
+          &#8250;      
+            </button>
       </div>
     </div>
   );
