@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItineraries } from '../store/actions/itinerariesActions';
 import { HeartIcon } from '@heroicons/react/24/solid';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 
 const CityDetail = () => {
   const { cityId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { itineraries, loading, error } = useSelector((state) => state.itineraries);
   const { cities } = useSelector((state) => state.cities);
   
@@ -14,10 +16,11 @@ const CityDetail = () => {
   
   const [expandedItineraries, setExpandedItineraries] = useState(new Set());
   const [likesCount, setLikesCount] = useState({});
+  
+  const itinerariesSectionRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchItineraries(cityId));
-    console.log(city); 
   }, [dispatch, cityId]);
 
   const toggleExpand = (id) => {
@@ -33,6 +36,11 @@ const CityDetail = () => {
     }));
   };
 
+  const scrollToItineraries = () => {
+    if (itinerariesSectionRef.current) {
+      itinerariesSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   if (loading) return <h1>Loading city details...</h1>;
   if (error) return <h1>Error loading city details: {error}</h1>;
@@ -44,14 +52,23 @@ const CityDetail = () => {
         <div className="bg-black bg-opacity-30 h-full flex flex-col items-center justify-center text-center">
           <h1 className="text-7xl font-bold text-white">{city.city}, {city.country}</h1>
           <p className="text-xl text-white mt-4 px-4">{city.description}</p>
-          <button onClick={() => navigate('/cities')} className="mt-4 bg-blue-500 hover:bg-gray-700 text-white py-3 px-5 rounded text-lg">
+          <button 
+            onClick={() => navigate('/cities')}
+            className="mt-4 bg-blue-500 hover:bg-gray-700 text-white py-3 px-5 rounded text-lg"
+          >
             Return to Cities
+          </button>
+          <button 
+            onClick={scrollToItineraries} 
+            className="mt-4 bg-blue-500 hover:bg-gray-700 text-white py-3 px-5 rounded text-lg flex items-center"
+          >
+            View Itineraries
+            <ChevronDownIcon className="h-5 w-5 ml-2" />
           </button>
         </div>
       </div>
 
-
-      <div className="flex flex-col items-center justify-center bg-slate-200 py-8">
+      <div ref={itinerariesSectionRef} className="flex flex-col items-center justify-center bg-slate-200 py-8">
         <section className="space-y-10 text-neutral-500 dark:text-neutral-300 text-center">
           <h1 className="text-5xl font-bold">ITINERARIES</h1>
           <div className="flex flex-wrap justify-center gap-12">
