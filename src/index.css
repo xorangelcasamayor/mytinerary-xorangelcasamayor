@@ -4,12 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
+
 .hero-section {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 60rem;
-  background-image: url('https://images.pexels.com/photos/207896/pexels-photo-207896.jpeg');
+  background-image: url('../public/vecteezy_ai-generated-travelling-to-thailand-advertisment-background_37248582.jpg');
   background-size: cover;
   background-position: center;
   animation: moveBackground 20s linear infinite;
@@ -29,3 +33,12 @@
     background-position: 100% 0%;
   }
 }
+
+
+.page-background {
+  background-image: url('../public/vecteezy_ai-generated-travelling-to-thailand-advertisment-background_37248582.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 80vh; 
+}
+

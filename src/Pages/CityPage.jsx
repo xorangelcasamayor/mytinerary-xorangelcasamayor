@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { HeartIcon } from '@heroicons/react/24/solid';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +28,6 @@ const CitiesPage = ({ isDarkMode }) => {
     fetchCities();
   }, [dispatch]);
 
- 
   const filteredCities = cities.filter(city =>
     city.city && city.city.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
@@ -49,7 +49,10 @@ const CitiesPage = ({ isDarkMode }) => {
   }
 
   return (
-    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-slate-600'} py-8`}>
+    <div 
+      className={`min-h-screen py-8 ${isDarkMode ? 'bg-gray-800' : 'bg-slate-600'}`}
+      style={{ backgroundImage: 'url("../public/vecteezy_ai-generated-travelling-to-thailand-advertisment-background_37248582.jpg")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+    >
       <h1 className="mt-24 text-center text-3xl font-bold mb-4 text-white">Cities</h1>
 
       <div className="flex justify-center mb-4">

@@ -32,7 +32,7 @@ const Hero = () => {
       <div className="hero-content absolute inset-0"></div>
 
       <motion.h1
-        className="text-6xl font-bold relative z-10" 
+        className="text-8xl font-bold relative z-10" 
         initial={{ opacity: 0, y: -20 }}
         animate={showText[0] ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5 }}
@@ -41,7 +41,7 @@ const Hero = () => {
       </motion.h1>
 
       <motion.p
-        className="mt-2 text-xl relative z-10" 
+        className="mt-8 text-4xl relative z-10 font-bold" 
         initial={{ opacity: 0, y: -20 }}
         animate={showText[1] ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5 }}
